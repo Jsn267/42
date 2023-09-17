@@ -1,0 +1,6 @@
+*.out
+.vscode/
+*/Contents/*
+.DS_Store
+/cursus/.DS_Store
+/cursus/code/DS_Store
