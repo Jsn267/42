@@ -1,11 +1,11 @@
 #include "libft.h"
-int    ft_memcmp(const void *s1, const void *s2, size_t n)
+int    ft_memcmp(const void *dst, const void *src, size_t n)
 {
     const char    *ptr1;
     const char    *ptr2;
 
-    ptr1 = s1;
-    ptr2 = s2;
+    ptr1 = dst;
+    ptr2 = src;
 
     while (n--)
     {
