@@ -6,7 +6,7 @@ char    *ft_substr(char const *s, unsigned int start, size_t len)
     size_t     count;
 
     count = 0;
-    substr = (char *)malloc((len + 1) * sizeof(char));
+    substr = (char *)malloc((len + 1) * (sizeof(char)));
 
     if (ft_strlen(s) < len || (unsigned int)ft_strlen(s) < start)// for allocation fails
         return (0);

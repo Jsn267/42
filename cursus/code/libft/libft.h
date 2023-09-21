@@ -24,13 +24,14 @@ int         ft_toupper(int c);
 int         ft_tolower(int c);
 char        *ft_strchr(const char *str, int character);
 char        *ft_strrchr(const char* str, int i);
-
+int         ft_strncmp(const char *s1, const char *s2, size_t n);
 int         ft_memcmp(const void *s1, const void *s2, size_t n);
-
+char    *strnstr(const char *haystack, const char *needle, size_t len);
 int         ft_atoi(char *str);
 void        *ft_calloc(size_t count, size_t size);
 char        *ft_strdup(const char *s1);
-
+char        *ft_strjoin(char const *s1, char const *s2);
+char        *ft_strtrim(char const *s1, char const *set);
 //part 2
 char    *ft_substr(char const *s, unsigned int start, size_t len);
 #endif
