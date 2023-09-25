@@ -1,4 +1,4 @@
-Name	=	libft.a # name of the library to be created
+NAME	=	libft.a # name of the library to be created
 
 #list all the source files
 SRC_MAND	=	ft_isalpha.c	\
@@ -25,7 +25,9 @@ SRC_MAND	=	ft_isalpha.c	\
 			ft_calloc.c	\
 			ft_strdup.c	\
 			ft_substr.c	\
-			ft_strjoin.c	
+			ft_strjoin.c \
+			ft_strtrim.c \
+			ft_split.c	
 			
 
 OBJ_MAND	= $(SRC_MAND:.c=.o) # pattern substitution
@@ -42,14 +44,14 @@ AR			= ar rcs # ar:create an archive file  ||r:replace or add  ||c:create if doe
 
 RANLIB		= ranlib # generate an index for an archive file
 
-all				:			NAME
+all				:			$(NAME)
 							@echo Compiling library "libft.a" File "Only Mandatory Parts": $@ ...
 # @echo: to print the msg  || $@ that indicate all
 
-NAME			:			$(OBJ_MAND)
+$(NAME)			:			$(OBJ_MAND)
 							@echo Compiling Library File: $@ ...
-							$(AR) NAME $(OBJ_MAND)
-							$(RANLIB) NAME
+							$(AR) $(NAME) $(OBJ_MAND)
+							$(RANLIB) $(NAME)
 
 %.o				:			%.c
 							@echo Compiling Binary Files: $@ ...
@@ -65,7 +67,7 @@ clean			:
 
 fclean			:			clean
 							@echo Cleaning All ".o & libft.a" Generated Files:
-							$(RM) NAME
+							$(RM) $(NAME)
 
 re				:			fclean all
 							@echo Cleaning All ".o & libft.a" Generated Files And Remake Everything:

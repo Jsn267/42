@@ -1,5 +1,5 @@
 #include "libft.h"
-
+#include <libc.h>
 char    *ft_strchr(const char *str,int character)
 {
     const char   *ptr;
@@ -16,11 +16,13 @@ char    *ft_strchr(const char *str,int character)
         return ((char *)ptr);
     return (0);
 }
-
+/*
 int     main(void)
 {
     char a[] = "abcde";
     int t = 'c';
     char *result = ft_strchr(a,t);
-    printf("%s", result);
+    printf("sys ::%s\n",strchr(a,t));
+    printf("my ;;%s", result);
 }
+*/

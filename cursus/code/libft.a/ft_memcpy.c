@@ -18,12 +18,3 @@ void    *ft_memcpy(void *dest,const void *src,size_t n)
     return ((void *)dest);
 }
 
-int    main(void)
-{
-    char a[] = "01234";
-    char b[] = "56789";
-
-    ft_memcpy(a,b,3);
-    
-    printf("%s",a);
-}

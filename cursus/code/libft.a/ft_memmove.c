@@ -21,13 +21,3 @@ void    *ft_memmove(void *dst,const void *src,size_t len)
     }
     return (dst);
 }
-
-int     main(void)
-{
-    char a[] = "01234";
-    char b[] = "56789";
-
-    ft_memmove(a,b,3);
-
-    printf("%s", a);
-}

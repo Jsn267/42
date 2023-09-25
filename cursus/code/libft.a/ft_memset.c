@@ -7,5 +7,6 @@ void    *ft_memset(void *s,int c,size_t n)
     {
         *ptr++ = c;
     }
+    s = ptr;
     return (s);
 }

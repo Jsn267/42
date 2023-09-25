@@ -4,7 +4,7 @@ char    *ft_substr(char const *s, unsigned int start, size_t len)
 {
     char   *substr;
     size_t     count;
-
+    
     count = 0;
     substr = (char *)malloc((len + 1) * (sizeof(char)));
 
@@ -16,10 +16,12 @@ char    *ft_substr(char const *s, unsigned int start, size_t len)
         substr[count] = s[count + start];
         count++;
     }        
+    substr[count] = '\0';
+
     return (substr);
 }
-int     main(void)
+int main(void)
 {
-    char a[]="Apple";
-    printf("Substring result:: %s\n",ft_substr(a,3,5));
+    char a[]="abcde";
+    printf("%s",ft_substr(a,2,5));
 }

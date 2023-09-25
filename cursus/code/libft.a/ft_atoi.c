@@ -34,9 +34,3 @@ int	ft_atoi(char *str)
 	}
 	return (num);
 }
-
-int	main(void)
-{
-	char i[] = "  --123";
-	printf("Ans is %d ",ft_atoi(i));
-}

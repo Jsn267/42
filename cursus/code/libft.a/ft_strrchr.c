@@ -21,10 +21,4 @@ char    *ft_strrchr(const char* str,int i)
     return (0);
 
 }
-int     main(void)
-{
-    char a[] = "abcdecfe";
-    int t = 'c';
-    char *result = ft_strrchr(a,t);
-    printf("%s", result);
-}
+
