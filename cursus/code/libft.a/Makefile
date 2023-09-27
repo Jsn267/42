@@ -27,10 +27,29 @@ SRC_MAND	=	ft_isalpha.c	\
 			ft_substr.c	\
 			ft_strjoin.c \
 			ft_strtrim.c \
-			ft_split.c	
-			
+			ft_split.c	\
+			ft_itoa.c \
+			ft_strmapi.c \
+			ft_striteri.c \
+			ft_putchar_fd.c \
+			ft_putstr_fd.c \
+			ft_putendl_fd \
+			ft_putnbr_fd
+
+#bonus points
+SRC_BONS	=	ft_lstnew.c \
+				ft_lstadd_front.c \
+				ft_lstsize.c \
+				ft_lstlast.c \
+				ft_lstadd_back.c \
+				ft_lstdelone.c \
+				ft_lstclear.c \
+				ft_lstiter.c \
+				ft_lstmap.c 		
 
 OBJ_MAND	= $(SRC_MAND:.c=.o) # pattern substitution
+
+OBJ_BONS	= $(SRC_BONS:.c=.o)
 
 CC			= gcc
 
@@ -53,6 +72,11 @@ $(NAME)			:			$(OBJ_MAND)
 							$(AR) $(NAME) $(OBJ_MAND)
 							$(RANLIB) $(NAME)
 
+bonus			:			$(OBJ_BONS)
+							@echo Compiling Library File: $@ ...
+							$(AR) $(NAME) $(OBJ_BONS)
+							$(RANLIB) $(NAME)	
+
 %.o				:			%.c
 							@echo Compiling Binary Files: $@ ...
 							$(CC) $(CFLAGS) -c $< -o $@ $(LFLAGS)
@@ -62,12 +86,12 @@ $(NAME)			:			$(OBJ_MAND)
 
 clean			:	
 							@echo Cleaning The .o Generated Files: $@ ...
-							$(RM) $(OBJ_MAND) 
+							$(RM) $(OBJ_MAND) $(OBJ_BONS)
 
 
 fclean			:			clean
 							@echo Cleaning All ".o & libft.a" Generated Files:
-							$(RM) $(NAME)
+							$(RM) $(NAME) bonus
 
 re				:			fclean all
 							@echo Cleaning All ".o & libft.a" Generated Files And Remake Everything:

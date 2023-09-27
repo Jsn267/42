@@ -20,8 +20,8 @@ char    *ft_substr(char const *s, unsigned int start, size_t len)
 
     return (substr);
 }
-int main(void)
+/*int main(void)
 {
     char a[]="abcde";
     printf("%s",ft_substr(a,2,5));
-}
+}*/
