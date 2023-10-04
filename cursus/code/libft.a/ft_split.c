@@ -1,69 +1,97 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jason <jason@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/02 15:25:52 by jason             #+#    #+#             */
+/*   Updated: 2023/10/03 21:10:19 by jason            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-int Actual_len(char const *s, char c)
+static int	count_words(char const *s, char c)
 {
-    int len;
-    char *ss;
+	int	i;
+	int	words;
 
-    ss = (char *)s;
-    while(*ss)
-    {
-        while (*ss == c)//chg to next ptr 
-            ss++;
-        if (*ss)
-            len++;
-        while (*ss && *ss != c)//for loop
-            ss++;
-    }
-     return (len);
-}
-
-char **ft_split(char const *s, char c)
-{
-    int len;
-    char **rtn;
-    char *tmp;
-
-    tmp = (char *)s;
-    len = Actual_len(s,c);
-    rtn = (char **)malloc((len + 1) * (sizeof(char *)));
-
-    while (*tmp)
+	words = 0;
+	i = 0;
+	while (s[i])
 	{
-		while (*s == c)//chg ptr
-			s++;
-		tmp = (char *)s;
-		while (*tmp && *tmp != c)//gtring each element of arr
-			tmp++;
-		if (*tmp == c || tmp > s)// chg to next ptr
-		{
-			*rtn = ft_substr(s, 0, tmp - s);
-			s = tmp;
-			rtn++;
-		}
+		if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
+			words++;
+		i++;
 	}
-	*rtn = NULL;
-
-    return (rtn);
+	return (words);
 }
-int main(void)
-{
-    char a[]="a,b,v,c,d,e,f,eef,ee,d,e,e,";
-    char c = ',';
-    int i = 0;
-    int j = 0;
-    char ** b;
-    b = ft_split(a,c);
-    printf("Reuslt::: %p\n", b);
 
-    while(b[i][j] != '\0')
-    {
-        while(b[i][j] != '\0')
-        {
-            printf("%c",b[i][j]);
-            j++;
-        }
-        printf("\n");
-        i++;
-    }
+static int	words_len(char const *s, char c)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = 0;
+	while (s[i] != c && s[i] != '\0')
+	{
+		i++;
+		len++;
+	}
+	return (len);
+}
+
+static void	*leak(char **splitted, int words)
+{
+	int	i;
+
+	i = 0;
+	while (i < words)
+	{
+		free(splitted[i]);
+		i++;
+	}
+	free(splitted);
+	return (NULL);
+}
+
+static char	**fill(char const *s, int words, char c, char **splitted)
+{
+	int	i;
+	int	j;
+	int	len;
+
+	i = -1;
+	while (++i < words)
+	{
+		while (*s == c)
+			s++;
+		len = words_len(s, c);
+		splitted[i] = (char *)malloc(sizeof(char) * (len + 1));
+		if (!(splitted[i]))
+			return (leak(splitted, i));
+		j = 0;
+		while (j < len)
+			splitted[i][j++] = *s++;
+		splitted[i][j] = '\0';
+	}
+	splitted[i] = NULL;
+	return (splitted);
+}
+
+char	**ft_split(char const *s, char c)
+{
+	char **splitted;
+	int words;
+
+	if (!s)
+		return (NULL);
+	words = count_words(s, c);
+	splitted = (char **)malloc(sizeof(char *) * (words + 1));
+	if (!(splitted))
+		return (NULL);
+	splitted = fill(s, words, c, splitted);
+	return (splitted);
 }

@@ -1,100 +1,91 @@
-NAME	=	libft.a # name of the library to be created
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jason <jason@student.42.fr>                +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/10/04 12:18:32 by jason             #+#    #+#              #
+#    Updated: 2023/10/04 12:18:37 by jason            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-#list all the source files
-SRC_MAND	=	ft_isalpha.c	\
-			ft_isdigit.c	\
-			ft_isalnum.c	\
-			ft_isascii.c	\
-			ft_isprint.c	\
-			ft_strlen.c	\
-			ft_memset.c	\
-			ft_bzero.c	\
-			ft_memcpy.c	\
-			ft_memmove.c	\
-			ft_strlcpy.c	\
-			ft_strlcat.c	\
-			ft_toupper.c	\
-			ft_tolower.c	\
-			ft_strchr.c	\
-			ft_strrchr.c	\
-			ft_strncmp.c	\
-			ft_memchr.c	\
-			ft_memcmp.c	\
-			ft_strnstr.c	\
-			ft_atoi.c	\
-			ft_calloc.c	\
-			ft_strdup.c	\
-			ft_substr.c	\
-			ft_strjoin.c \
-			ft_strtrim.c \
-			ft_split.c	\
-			ft_itoa.c \
-			ft_strmapi.c \
-			ft_striteri.c \
-			ft_putchar_fd.c \
-			ft_putstr_fd.c \
-			ft_putendl_fd \
-			ft_putnbr_fd
+NAME = libft.a
 
-#bonus points
-SRC_BONS	=	ft_lstnew.c \
-				ft_lstadd_front.c \
-				ft_lstsize.c \
-				ft_lstlast.c \
-				ft_lstadd_back.c \
-				ft_lstdelone.c \
-				ft_lstclear.c \
-				ft_lstiter.c \
-				ft_lstmap.c 		
+SRC = ft_atoi.c \
+      ft_bzero.c \
+      ft_isalpha.c \
+      ft_isdigit.c \
+      ft_isalnum.c \
+      ft_isascii.c \
+      ft_isprint.c \
+      ft_strlen.c \
+      ft_memset.c \
+      ft_memcpy.c \
+      ft_memmove.c \
+      ft_strlcpy.c \
+      ft_strlcat.c \
+      ft_toupper.c \
+      ft_tolower.c \
+      ft_strchr.c \
+      ft_strrchr.c \
+      ft_memchr.c \
+      ft_memcmp.c \
+      ft_strnstr.c \
+      ft_strlcpy.c \
+      ft_substr.c \
+      ft_split.c \
+      ft_strncmp.c \
+      ft_strdup.c \
+      ft_strjoin.c \
+      ft_strtrim.c \
+      ft_itoa.c \
+      ft_strmapi.c \
+      ft_striteri.c \
+      ft_putchar_fd.c \
+      ft_putstr_fd.c \
+      ft_putendl_fd.c \
+      ft_putnbr_fd.c \
+      ft_calloc.c \
 
-OBJ_MAND	= $(SRC_MAND:.c=.o) # pattern substitution
-
-OBJ_BONS	= $(SRC_BONS:.c=.o)
-
-CC			= gcc
-
-CFLAGS		+= -Wall -Werror -Wextra -g # g: for debugging
-
-LFLAGS		+= -I. # to indicate to the linker where to find header files 
-
-RM			= rm -rf
-
-AR			= ar rcs # ar:create an archive file  ||r:replace or add  ||c:create if doesn't exit ||s:write into archive file
-
-RANLIB		= ranlib # generate an index for an archive file
-
-all				:			$(NAME)
-							@echo Compiling library "libft.a" File "Only Mandatory Parts": $@ ...
-# @echo: to print the msg  || $@ that indicate all
-
-$(NAME)			:			$(OBJ_MAND)
-							@echo Compiling Library File: $@ ...
-							$(AR) $(NAME) $(OBJ_MAND)
-							$(RANLIB) $(NAME)
-
-bonus			:			$(OBJ_BONS)
-							@echo Compiling Library File: $@ ...
-							$(AR) $(NAME) $(OBJ_BONS)
-							$(RANLIB) $(NAME)	
-
-%.o				:			%.c
-							@echo Compiling Binary Files: $@ ...
-							$(CC) $(CFLAGS) -c $< -o $@ $(LFLAGS)
-# %.o is target pattern 
-# %.c is prerequest pattern
-# $< indicate first prerequest
-
-clean			:	
-							@echo Cleaning The .o Generated Files: $@ ...
-							$(RM) $(OBJ_MAND) $(OBJ_BONS)
+SRC_BONUS = ft_lstnew.c \
+	    ft_lstadd_front.c \
+	    ft_lstsize.c \
+	    ft_lstlast.c \
+	    ft_lstadd_back.c \
+	    ft_lstdelone.c \
+	    ft_lstclear.c \
+	    ft_lstiter.c \
+	    ft_lstmap.c
 
 
-fclean			:			clean
-							@echo Cleaning All ".o & libft.a" Generated Files:
-							$(RM) $(NAME) bonus
+OBJ = $(SRC:.c=.o)
 
-re				:			fclean all
-							@echo Cleaning All ".o & libft.a" Generated Files And Remake Everything:
+OBJ_B = $(SRC_BONUS:.c=.o)
 
+CC = gcc
 
-.PHONY			:			all clean fclean re 
+INC = libft.h
+
+FLG = -Wall -Werror -Wextra
+
+%.o : %.c
+	@$(CC) $(FLG) -c -o $@ $^
+
+$(NAME): $(OBJ)
+	@ar rc $(NAME) $(OBJ)
+	@ranlib $(NAME)
+
+bonus: $(OBJ_B)
+	@ar rc $(NAME) $(OBJ_B)
+	@ranlib $(NAME)
+
+all: $(NAME)
+	
+clean:
+	@/bin/rm -f $(OBJ) $(OBJ_B)
+
+fclean: clean
+	@/bin/rm -f $(NAME)
+
+re: fclean all

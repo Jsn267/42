@@ -1,34 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jason <jason@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/02 15:27:08 by jason             #+#    #+#             */
+/*   Updated: 2023/10/04 12:14:09 by jason            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-char *ft_strtrim(char const *s1, char const *set)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-    size_t	len;
-	char	*final;
-	
-	if (!s1 || !set)
-		return (NULL);
-	while (*s1 && ft_strchr(set, *s1) != 0) //increment until characters not found
-		s1++;
+	char *substr;
+	size_t new_len;
 
-	len = ft_strlen(s1);
-
-	while (len && ft_strchr(set, s1[len - 1]) != 0) //decrement len until character not found
-		len--;
-	
-	final = malloc(sizeof(char) * (len + 1));
-	if (!final)
+	if (!s)
+		return (0);
+	if ((unsigned int)ft_strlen(s) < start)
+		return (0);
+	new_len = ft_strlen(s + start);
+	if (new_len < len)
+		len = new_len;
+	substr = (char *)malloc(sizeof(char) * (len + 1));
+	if (!(substr))
 		return (NULL);
-	ft_memcpy(final, s1, len);
-	
-    final[len] = '\0';
-	
-	return (final);
+	ft_strlcpy(substr, s + start, len + 1);
+	return (substr);
 }
-
-/*int main(void)
-{
-    char a[] = "ba ba ba bafgse sfjgoer reg ba ba aefierfherhgie rba ba ba ba ba ba";
-    char b[] = "ba ba";
-    printf("Result:: %s\n",ft_strtrim(a,b));
-
-}*/

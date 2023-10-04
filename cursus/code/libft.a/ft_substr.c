@@ -1,27 +1,35 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jason <jason@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/02 15:27:15 by jason             #+#    #+#             */
+/*   Updated: 2023/10/04 12:14:21 by jason            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-char    *ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-    char   *substr;
-    size_t     count;
-    
-    count = 0;
-    substr = (char *)malloc((len + 1) * (sizeof(char)));
+	char *rtn;
+	size_t i;
 
-    if (ft_strlen(s) < len || (unsigned int)ft_strlen(s) < start)// for allocation fails
-        return (0);
-
-    while(count < len)
-    {
-        substr[count] = s[count + start];
-        count++;
-    }        
-    substr[count] = '\0';
-
-    return (substr);
+	if (!s)
+		return (0);
+	if ((size_t)start > ft_strlen(s))
+		return (ft_strdup(""));
+	rtn = malloc(sizeof(char) * (len + 1));
+	i = 0;
+	if (!rtn)
+		return (0);
+	while (i < len)
+	{
+		rtn[i] = *(s + start + i);
+		i++;
+	}
+	rtn[i] = '\0';
+	return (rtn);
 }
-/*int main(void)
-{
-    char a[]="abcde";
-    printf("%s",ft_substr(a,2,5));
-}*/

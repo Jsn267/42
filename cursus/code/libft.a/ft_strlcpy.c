@@ -1,34 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jason <jason@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/02 15:26:35 by jason             #+#    #+#             */
+/*   Updated: 2023/10/04 12:12:49 by jason            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include <libc.h>
-size_t  ft_strlcpy(char *dst,const char *src,size_t maxlen)
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t maxlen)
 {
- size_t   src_len;
+	size_t	src_len;
+	size_t	count;
 
-
- src_len = ft_strlen(src);
-
-if ((src_len + 1) < maxlen)
-{
-    ft_memcpy(dst,src,(src_len + 1));
-    dst[src_len + 1] = '\0';
-
-}else if (maxlen != 0)
-{
-    ft_memcpy(dst,src,(maxlen - 1));
-    dst[maxlen - 1] = '\0';
+	count = 0;
+	src_len = ft_strlen(src);
+	if (maxlen == 0)
+		return (src_len);
+	while (src[count] != '\0' && count < (maxlen - 1))
+	{
+		dst[count] = src[count];
+		count++;
+	}
+	dst[count] = '\0';
+	return (src_len);
 }
-    return (src_len);
-}
-
-/*int main(void)
-{
-    char a[]= "abc";
-    char b[]= "def";
-    char c[]= "abc";
-    char d[]= "def";
-    ft_strlcpy(a,b,3);
-    strlcpy(c,d,3);
-    printf("MY :: %s\n",a);
-    printf("SY :: %s\n",c);
-
-}*/
