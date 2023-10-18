@@ -10,15 +10,15 @@ void	ft_printf_char(t_arg *arg)
 	arg->len += arg->spad + 1;
 	if (arg->minus)
 	{
-		ft_putchar_fd(c, 1); // why cannt put FD
+		ft_putchar_fd(c, FD); // why cannt put FD
 		while (arg->spad--)
-			ft_putchar_fd(' ', 1);
+			ft_putchar_fd(' ', FD);
 	}
 	else
 	{
 		while (arg->spad--)
-			ft_putchar_fd(' ', 1);
-		ft_putchar_fd(c, 1);
+			ft_putchar_fd(' ', FD);
+		ft_putchar_fd(c, FD);
 	}
 }
 
@@ -38,15 +38,15 @@ void	ft_printf_str(t_arg *arg)
 	arg->len += arg->spad + arg->precision;
 	if (arg->minus)
 	{
-		ft_putstr_fd(str, 1);
+		ft_putstr_fd(str, FD);
 		while (arg->spad--)
-			ft_putchar_fd(' ', 1);
+			ft_putchar_fd(' ', FD);
 	}
 	else
 	{
 		while (arg->spad--)
-			ft_putchar_fd(' ', 1);
-		write(1, str, arg->precision);
+			ft_putchar_fd(' ', FD);
+		write(FD, str, arg->precision);
 	}
 }
 
@@ -62,17 +62,17 @@ void	ft_printf_ptr(t_arg *arg)
 	arg->len += arg->spad + len;
 	if (arg->minus)
 	{
-		ft_putstr_fd("x0", 1);
-		ft_putunbr_base_fd(n, 16, 1);
+		ft_putstr_fd("x0", FD);
+		ft_putunbr_base_fd(n, 16, FD);
 		while (arg->spad--)
-			ft_putchar_fd(' ', 1);
+			ft_putchar_fd(' ', FD);
 	}
 	else
 	{
 		while (arg->spad--)
-			ft_putchar_fd(' ', 1);
-		ft_putstr_fd("x0", 1);
-		ft_putunbr_base_fd(n, 16, 1);
+			ft_putchar_fd(' ', FD);
+		ft_putstr_fd("x0", FD);
+		ft_putunbr_base_fd(n, 16, FD);
 	}
 }
 
@@ -99,15 +99,15 @@ void	ft_printf_int(t_arg *arg)
 	arg->len += arg->spad + arg->zpad + len;
 	if (arg->minus)
 	{
-		ft_putsnbr_base_fd(arg, n, 10, 1);
+		ft_putsnbr_base_fd(arg, n, 10, FD);
 		while (arg->spad--)
-			ft_putchar_fd(' ', 1);
+			ft_putchar_fd(' ', FD);
 	}
 	else
 	{
 		while (arg->spad--)
-			ft_putchar_fd(' ', 1);
-		ft_putsnbr_base_fd(arg, n, 10, 1);
+			ft_putchar_fd(' ', FD);
+		ft_putsnbr_base_fd(arg, n, 10, FD);
 	}
 }
 
@@ -130,14 +130,14 @@ void	ft_printf_uint(t_arg *arg, char c, int base)
 
 	if (arg->minus)
 	{
-		ft_putsnbr_base_fd(arg, n, base, 1);
+		ft_putsnbr_base_fd(arg, n, base, FD);
 		while (arg->spad)
-			ft_putchar_fd(' ', 1);
+			ft_putchar_fd(' ', FD);
 	}
 	else
 	{
 		while (arg->spad)
-			ft_putchar_fd(' ', 1);
-		ft_putsnbr_base_fd(arg, n, base, 1);
+			ft_putchar_fd(' ', FD);
+		ft_putsnbr_base_fd(arg, n, base, FD);
 	}
 }

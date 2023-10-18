@@ -19,7 +19,7 @@ int	ft_printf(const char *string, ...)
 		else
 		{
 			word_len++;
-			ft_putchar_fd(*string, 1);
+			ft_putchar_fd(*string, FD);
 		}
 	}
 	va_end(arg.ap);
@@ -46,7 +46,7 @@ char	*ft_main_process(char *str, t_arg *arg)
 	else if (*str == 'x' || *str == 'X')
 		ft_printf_uint(arg, *str, 16);
 	else if (*str == '%' && ++arg->len)
-		ft_putchar_fd(*str, 1);
+		ft_putchar_fd(*str, FD);
 	str++;
 	return (str);
 }

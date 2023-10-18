@@ -23,7 +23,7 @@ typedef struct s_arg
     va_list ap;
 } t_arg;
 
-# define FD 1;
+# define FD 1
 
 //ft_printf.c
 int ft_printf(const char *string, ...);

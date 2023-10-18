@@ -63,23 +63,23 @@ void	ft_putsnbr_base_fd(t_arg *arg, long long num, int base, int fd)
 	if (num < 0)
 	{
 		num = -1 * num;
-		ft_putchar_fd('-', 1);
+		ft_putchar_fd('-', FD);
 	}
 	else if (arg->hash && arg->upper)
 	{
-		ft_putstr_fd("0X", 1);
+		ft_putstr_fd("0X", FD);
 	}
 	else if (arg->hash && !arg->upper)
 	{
-		ft_putstr_fd("0x", 1);
+		ft_putstr_fd("0x", FD);
 	}
 	else if (arg->plus)
 	{
-		ft_putchar_fd('+', 1);
+		ft_putchar_fd('+', FD);
 	}
 	else if (arg->space)
 	{
-		ft_putchar_fd(' ', 1);
+		ft_putchar_fd(' ', FD);
 	}
 	if (arg->upper)
 	{
@@ -87,7 +87,7 @@ void	ft_putsnbr_base_fd(t_arg *arg, long long num, int base, int fd)
 	}
 	while (arg->zpad)
 	{
-		ft_putchar_fd('0', 1);
+		ft_putchar_fd('0', FD);
 		arg->zpad--;
 	}
 	reset(arg);
