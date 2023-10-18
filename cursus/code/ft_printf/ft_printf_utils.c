@@ -1,109 +1,16 @@
 #include "libftprintf.h"
 
-void    ft_print_char(t_arg *arg)
+void	ft_printf_char(t_arg *arg)
 {
-    const char c    =   va_arg(arg->ap,char);
+	char	c;
 
-    if (arg->width > arg->precision)
-        arg->spad = arg->width - arg->precision - 1;//1 for char
-    
-    arg->len += arg->spad + 1;
-
-    if (arg->minus)
-    {
-        ft_putchar_fd(c,1);//why cannt put FD
-        while (arg->spad--)
-            ft_putchar_fd(' ',1);
-    }
-    else
-    {
-       while (arg->spad--)
-            ft_putchar_fd(' ',1); 
-       ft_putchar_fd(c,1);
-    }
-}
-
-void    ft_print_str(t_arg *arg)
-{
-    int str_len;
-
-    const char *str = va_arg(arg->ap,char *);
-
-    if (!str)
-        str = "(null)";
-    
-    str_len = ft_strlen(str);
-    
-   if (arg->precision > str_len)
-        arg->precision = str_len;
-   if (arg->width > arg->precision)
-        arg->spad = arg->width - arg->precision;
-   arg->len += arg->spad + arg->precision;
-    if (arg->minus)
-    {
-        ft_putstr_fd(str,1);
-        while (arg->spad--)
-            ft_putchar_fd(' ',1);
-    }
-    else
-    {
-       while (arg->spad--)
-            ft_putchar_fd(' ',1);
-        write(1,str,arg->precision);
-    }
-}
-
-void    ft_print_ptr(t_arg *arg)
-{
-    int len;
-
-    const long long n = va_arg(arg->ap,long long);
-    len = ft_allnblen(n,16) + 2;
-
-    if (arg->width > len)
-        arg->spad = arg->width - len;
-    arg->len += arg->spad + len;
-
-    if (arg->minus)
-    {
-        ft_putstr_fd("x0",1);
-        ft_putunbr_base_fd(n,16,1);
-        while (arg->spad--)
-            ft_putchar_fd(' ',1);
-    }
-    else
-    {
-        while (arg->spad--)
-            ft_putchar_fd(' ',1);
-        ft_putstr_fd("x0",1);
-        ft_putunbr_base_fd(n,16,1); 
-    }
-}
-
-void ft_print_int(t_arg *arg)
-{
-    int len;
-    int unsigned_len;
-
-    const int n = va_arg(arg->ap,int);
-    len = ft_allnblen(n,10);
-    unsigned_len = ft_unsigned_allnblen(n,10);
-
-    if (arg->precision > unsigned_len)
-        arg->zpad = arg->precision -unsigned_len;
-    if (arg->zero && n < 0 && arg->zpad)// %05i >>> -0042
-        arg->zpad--;
-    if (arg->width > arg->zpad + len)
-		arg->spad = arg->width - arg->zpad - len;
-	if ((arg->space || arg->plus) && n >= 0 && arg->spad)
-        {
-		arg->spad--;
-        arg->len++;
-        }
-	arg->len += arg->spad + arg->zpad + len;
+	c = va_arg(arg->ap, int);
+	if (arg->width > arg->precision)
+		arg->spad = arg->width - arg->precision - 1; // 1 for char
+	arg->len += arg->spad + 1;
 	if (arg->minus)
 	{
-		ft_putsnbr_base_fd(n, 10, arg, 1);
+		ft_putchar_fd(c, 1); // why cannt put FD
 		while (arg->spad--)
 			ft_putchar_fd(' ', 1);
 	}
@@ -111,37 +18,126 @@ void ft_print_int(t_arg *arg)
 	{
 		while (arg->spad--)
 			ft_putchar_fd(' ', 1);
-		ft_putsnbr_base_fd(n, 10, arg, 1);
+		ft_putchar_fd(c, 1);
 	}
 }
 
-void ft_print_uint(t_arg *arg,char c,int base)
+void	ft_printf_str(t_arg *arg)
 {
-    int len;
+	int		str_len;
+	char	*str;
 
-    const int n = va_arg(arg->ap,unsigned int);
-    len = ft_unsigned_allnblen(n,base);
+	str = va_arg(arg->ap, char *);
+	if (!str)
+		str = "(null)";
+	str_len = ft_strlen(str);
+	if (arg->precision > str_len)
+		arg->precision = str_len;
+	if (arg->width > arg->precision)
+		arg->spad = arg->width - arg->precision;
+	arg->len += arg->spad + arg->precision;
+	if (arg->minus)
+	{
+		ft_putstr_fd(str, 1);
+		while (arg->spad--)
+			ft_putchar_fd(' ', 1);
+	}
+	else
+	{
+		while (arg->spad--)
+			ft_putchar_fd(' ', 1);
+		write(1, str, arg->precision);
+	}
+}
 
-    if (c == "X")
-        arg->upper = 1;
-    if (arg->hash && n > 0)
+void	ft_printf_ptr(t_arg *arg)
+{
+	int			len;
+	long long	n;
+
+	n = va_arg(arg->ap, int);
+	len = ft_allnblen(n, 16) + 2;
+	if (arg->width > len)
+		arg->spad = arg->width - len;
+	arg->len += arg->spad + len;
+	if (arg->minus)
+	{
+		ft_putstr_fd("x0", 1);
+		ft_putunbr_base_fd(n, 16, 1);
+		while (arg->spad--)
+			ft_putchar_fd(' ', 1);
+	}
+	else
+	{
+		while (arg->spad--)
+			ft_putchar_fd(' ', 1);
+		ft_putstr_fd("x0", 1);
+		ft_putunbr_base_fd(n, 16, 1);
+	}
+}
+
+void	ft_printf_int(t_arg *arg)
+{
+	int	len;
+	int	unsigned_len;
+	int	n;
+
+	n = va_arg(arg->ap, int);
+	len = ft_allnblen(n, 10);
+	unsigned_len = ft_unsigned_allnblen(n, 10);
+	if (arg->precision > unsigned_len)
+		arg->zpad = arg->precision - unsigned_len;
+	if (arg->zero && n < 0 && arg->zpad) // %05i >>> -0042
+		arg->zpad--;
+	if (arg->width > arg->zpad + len)
+		arg->spad = arg->width - arg->zpad - len;
+	if ((arg->space || arg->plus) && n >= 0 && arg->spad)
+	{
+		arg->spad--;
+		arg->len++;
+	}
+	arg->len += arg->spad + arg->zpad + len;
+	if (arg->minus)
+	{
+		ft_putsnbr_base_fd(arg, n, 10, 1);
+		while (arg->spad--)
+			ft_putchar_fd(' ', 1);
+	}
+	else
+	{
+		while (arg->spad--)
+			ft_putchar_fd(' ', 1);
+		ft_putsnbr_base_fd(arg, n, 10, 1);
+	}
+}
+
+void	ft_printf_uint(t_arg *arg, char c, int base)
+{
+	int len;
+
+	int n = va_arg(arg->ap, unsigned int);
+	len = ft_unsigned_allnblen(n, base);
+
+	if (c == 'X')
+		arg->upper = 1;
+	if (arg->hash && n > 0)
 		arg->len += 2;
 	if (arg->precision > len)
-		arg->zpad = arg->precision - len;    
+		arg->zpad = arg->precision - len;
 	if (arg->width > len)
 		arg->spad = arg->width - len;
 	arg->len += arg->spad + arg->zpad + len;
 
-    if (arg->minus)
-    {
-        ft_putsnbr_base_fd(arg,n,base,1);
-        while (arg->spad)
-            ft_putchar_fd(' ',1);
-    }
-    else 
-    {
-        while (arg->spad)
-            ft_putchar_fd(' ',1);
-        ft_putsnbr_base_fd(arg,n,base,1);
-    }
+	if (arg->minus)
+	{
+		ft_putsnbr_base_fd(arg, n, base, 1);
+		while (arg->spad)
+			ft_putchar_fd(' ', 1);
+	}
+	else
+	{
+		while (arg->spad)
+			ft_putchar_fd(' ', 1);
+		ft_putsnbr_base_fd(arg, n, base, 1);
+	}
 }

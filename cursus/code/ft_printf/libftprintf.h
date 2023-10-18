@@ -38,9 +38,9 @@ void ft_putunbr_base_fd(long long num,int base,int fd);
 void ft_putsnbr_base_fd(t_arg *arg,long long num,int base,int fd);
 
 //ft_printf_utils.c
-void ft_print_char(t_arg *arg);
-void ft_print_str(t_arg *arg);
-void ft_print_ptr(t_arg *arg);
-void ft_print_int(t_arg *arg);
-void ft_print_uint(t_arg *arg,char c,int base);
+void ft_printf_char(t_arg *arg);
+void ft_printf_str(t_arg *arg);
+void ft_printf_ptr(t_arg *arg);
+void ft_printf_int(t_arg *arg);
+void ft_printf_uint(t_arg *arg,char c,int base);
 #endif
