@@ -62,7 +62,7 @@ void    ft_print_ptr(t_arg *arg)
 
     if (arg->width > len)
         arg->spad = arg->width - len;
-    arg->len = arg->spad + len;
+    arg->len += arg->spad + len;
 
     if (arg->minus)
     {
@@ -83,54 +83,36 @@ void    ft_print_ptr(t_arg *arg)
 void ft_print_int(t_arg *arg)
 {
     int len;
+    int unsigned_len;
 
     const int n = va_arg(arg->ap,int);
-    
-    if (arg->dot || arg->zero)
-    {
-        len = ft_unsigned_allnblen(n,10);
-    }
-    else
-    {
-        len = ft_allnblen(n,10);
-    }
-    if (arg->width > len)//%_ni,%ni,%+5i
-        arg->loop = arg->width - len;
-    if (arg->precision)
-    {
-        arg->loop = arg->precision - len;
-        if (arg->zero && n < 0)
-            arg->loop = arg->loop - 1;//-1 for sign %05i>> -0042
-        arg->padding = '0';
-    }
-    arg->len = arg->loop + len;
-    
-    if (arg->minus)
-    {
-        if (arg->plus && n > -1)
+    len = ft_allnblen(n,10);
+    unsigned_len = ft_unsigned_allnblen(n,10);
+
+    if (arg->precision > unsigned_len)
+        arg->zpad = arg->precision -unsigned_len;
+    if (arg->zero && n < 0 && arg->zpad)// %05i >>> -0042
+        arg->zpad--;
+    if (arg->width > arg->zpad + len)
+		arg->spad = arg->width - arg->zpad - len;
+	if ((arg->space || arg->plus) && n >= 0 && arg->spad)
         {
-            ft_putchar_fd('+',1);
-            arg->loop = arg->loop - 1;
+		arg->spad--;
+        arg->len++;
         }
-        ft_putunbr_base_fd(n,10,1);//not using putnbr bcz of sign
-        while (arg->loop)
-            ft_putchar_fd(arg->padding,1);
-    }
-    else
-    {
-        if ((arg->dot || arg->zero) && n < 0)
-            ft_putchar_fd('-',1);
-        if (arg->dot && arg->plus)
-            ft_putchar_fd('+',1);
-        while (arg->loop)
-            ft_putchar_fd(arg->padding,1);
-        if ((arg->dot || arg->zero) && n < 0)
-        {
-            ft_putnbr_fd(-(n),1);
-        }
-        else
-            ft_putnbr_fd(n,1);        
-    }
+	arg->len += arg->spad + arg->zpad + len;
+	if (arg->minus)
+	{
+		ft_putsnbr_base_fd(n, 10, arg, 1);
+		while (arg->spad--)
+			ft_putchar_fd(' ', 1);
+	}
+	else
+	{
+		while (arg->spad--)
+			ft_putchar_fd(' ', 1);
+		ft_putsnbr_base_fd(n, 10, arg, 1);
+	}
 }
 
 void ft_print_uint(t_arg *arg,char c,int base)

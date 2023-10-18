@@ -12,8 +12,19 @@ LIBFT_OBJ	=	$(LIBFT_SRC:.c =.o)
 CC	=	gcc
 CFLAG	=	-Wall -Werror -Wextra
 
-all:	$(NAME)
+all	:	$(NAME)
+
+bonus	:	$(NAME)
+
+$(NAME)	:	$(OBJ) $(LIBFT_OBJ)
+			@ar rcs $(NAME) $(OBJ) $(LIBFT_OBJ)
+			@ranlib $(NAME)
 
 bonus:	$(NAME)
 
-$(NAME):	
+clean	:	@/bin/rm -f $(OBJ) $(LIBFT_OBJ)
+
+fclean	: clean
+			@/bin/rm -f $(NAME)
+
+re	:	fclean all 
