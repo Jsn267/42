@@ -1,35 +1,45 @@
-NAME	=	libftprintf.a
+NAME    =   libftprintf.a
 
-SRC	=	ft_printf.c	\
-		ft_printf_utils.c	\
-		ft_subft.c
+INC =   libft.h \
+        ft_printf.h
 
-LIBFT_SRC = $(wildcard /Users/jason/Developer/42/cursus/code/libft.a/*.c)
+SRCS    =   ft_printf_utils.c   \
+        ft_utils_spt.c  \
+        ft_printf.c \
+        ft_subft.c  \
+        ft_sec_subft.c
 
-OBJ	=	$(SRC:.c=.o)
-LIBFT_OBJ	=	$(LIBFT_SRC:.c=.o)
+OBJS    = ${SRCS:.c=.o}
 
-CC	=	gcc
+LIBFT_PATH      =   ./libft
 
-CFLAG	=	-Wall -Werror -Wextra
+LIBFT           =   $(LIBFT_PATH)/libft.a
 
-INC	=	libftprintf.h
+CC      = cc
 
-%.o	:	%.c
-		@$(CC) $(CFLAG) -c -o $@ $^
+CFLAGS  = -Wall -Wextra -Werror
 
-$(NAME)	:	$(OBJ) 
-			@ar rcs $(NAME) $(OBJ) 
-			@ranlib $(NAME)
+RM      = rm -f
 
-bonus:	$(NAME)
+all: $(NAME)
 
-all	:	$(NAME)
+bonus: $(NAME)
 
-clean	:
-			@/bin/rm -f $(OBJ) $(LIBFT_OBJ)
+$(LIBFT):
+	make -C $(LIBFT_PATH) all bonus
 
-fclean	:	clean
-			@/bin/rm -f $(NAME)
+$(NAME): $(LIBFT) $(OBJS)
+	cp $(LIBFT) $(NAME)
+	ar rc ${NAME} ${OBJS}
 
-re	:	fclean all 
+clean:
+	${RM} ${OBJS}
+	make -C $(LIBFT_PATH) clean
+
+fclean: clean
+	${RM} ${NAME}
+	${RM} libft.a
+	make -C $(LIBFT_PATH) fclean
+
+re: fclean all
+.PHONY: all bonus clean fclean re
