@@ -1,4 +1,4 @@
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*renew_line(char *saved)
 {
@@ -64,7 +64,7 @@ char	*add_data(int fd, char *saved)
 			free(saved);
 			free(buf);
 			saved = NULL;
-			// buf = NULL;//added
+			buf = NULL; // added
 			return (NULL);
 		}
 		buf[byte_read] = '\0';
@@ -77,22 +77,14 @@ char	*add_data(int fd, char *saved)
 char	*get_next_line(int fd)
 {
 	char *next_line;
-	static char *saved = NULL;
+	static char *saved[OPEN_MAX];
 
 	if (fd < 0 || BUFFER_SIZE < 1)
-	{
-		free(saved);
-		saved = NULL;
 		return (NULL);
-	}
-	// return (NULL);
-	saved = add_data(fd, saved);
-	if (!saved)
-	{
-		free(saved);
+	saved[fd] = add_data(fd, saved[fd]);
+	if (!saved[fd])
 		return (NULL);
-	}
-	next_line = ft_get_line(saved);
-	saved = renew_line(saved);
+	next_line = ft_get_line(saved[fd]);
+	saved[fd] = renew_line(saved[fd]);
 	return (next_line);
 }

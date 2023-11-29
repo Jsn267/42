@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klinn <klinn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jason <jason@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:26:32 by klinn             #+#    #+#             */
-/*   Updated: 2023/10/30 18:29:54 by klinn            ###   ########.fr       */
+/*   Updated: 2023/11/13 18:06:05 by jason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct s_arg
 	int		width;
 	int		zpad;
 	int		spad;
-
 	va_list	ap;
 }			t_arg;
 void		ft_reset(t_arg *arg);
